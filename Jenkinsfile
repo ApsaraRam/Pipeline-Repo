@@ -1,27 +1,27 @@
 pipeline {
     agent any
-
     stages {
-        stage('Build') {
+        stage('Back-end') {
+            agent {
+                docker {
+                    image 'maven:3.8.4-openjdk-17' // Updated Maven version with OpenJDK 17
+                    args '-v $HOME/.m2:/root/.m2'
+                }
+            }
             steps {
-                echo 'Building...'
+                sh 'mvn --version'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing...'
+        stage('Front-end') {
+            agent {
+                docker {
+                    image 'node:14-alpine' // Updated Node.js version with Alpine Linux
+                    args '-v $HOME/.npm:/root/.npm'
+                }
             }
-        }
-        stage('Deploy') {
             steps {
-                echo 'Deploying...'
+                sh 'node --version'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'node:16-alpine'
         }
     }
 }
