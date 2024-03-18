@@ -1,9 +1,6 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:16-alpine'
-        }
-    }
+    agent any
+
     stages {
         stage('Build') {
             steps {
@@ -19,6 +16,12 @@ pipeline {
             steps {
                 echo 'Deploying...'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'node:16-alpine'
         }
     }
 }
